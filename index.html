@@ -19,6 +19,18 @@
       }
     }
 
+    function getHumanChoice() {
+      let GetChoice = true;
+      while (GetChoice) {
+        let UserChoice = prompt("Type in one of these options: rock paper scissors");
+        if (UserChoice == "rock" || UserChoice == "paper" || UserChoice == "scissors") {
+          return UserChoice;
+        }
+      }
+    }
+
+    let UserChoice = getHumanChoice();
+
     console.log(getComputerChoice());
 
   </script>
