@@ -7,7 +7,7 @@
 <body>
 
   <script>
-    function getComputerChoice() {
+    function GetComputerChoice() {
       let ComputerChoice = undefined;
       let random = Math.random();
       if (random >= 0 && random < .333) {
@@ -19,7 +19,7 @@
       }
     }
 
-    function getHumanChoice() {
+    function GetUserChoice() {
       let GetChoice = true;
       while (GetChoice) {
         let UserChoice = prompt("Type in one of these options: rock paper scissors");
@@ -29,9 +29,11 @@
       }
     }
 
-    let UserChoice = getHumanChoice();
-
-    console.log(getComputerChoice());
+    // main
+    let UserScore = 0;
+    let ComputerScore = 0;
+    let UserChoice = GetUserChoice();
+    let ComputerChoice = GetComputerChoice();
 
   </script>
 
