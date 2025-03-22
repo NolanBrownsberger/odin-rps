@@ -7,7 +7,20 @@
 <body>
 
   <script>
-    
+    function getComputerChoice() {
+      let ComputerChoice = undefined;
+      let random = Math.random();
+      if (random >= 0 && random < .333) {
+        return (ComputerChoice = "rock");
+      } else if (random < .666) {
+        return (ComputerChoice = "paper");
+      } else {
+        return (ComputerChoice = "scissors")
+      }
+    }
+
+    console.log(getComputerChoice());
+
   </script>
 
 </body>
