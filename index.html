@@ -29,33 +29,33 @@
       }
     }
 
-    function PlayRound(UserChoice, ComputerChoice) {
-      if (UserChoice == ComputerChoice) {
-        console.log("Tie");
-      } else if (UserChoice == "rock" && ComputerChoice == "scissors" || UserChoice == "paper" && ComputerChoice == "rock" || UserChoice == "scissors" && ComputerChoice == "paper") {
-        UserScore++;
-        console.log("You win");
-      } else {
-        ComputerScore++;
-        console.log("You lose");
-      }
-      return;
-    }
-
     function PlayGame() {
+
+      function PlayRound(UserChoice, ComputerChoice) {
+        if (UserChoice == ComputerChoice) {
+          console.log("Tie");
+        } else if (UserChoice == "rock" && ComputerChoice == "scissors" || UserChoice == "paper" && ComputerChoice == "rock" || UserChoice == "scissors" && ComputerChoice == "paper") {
+          UserScore++;
+          console.log("You win");
+        } else {
+          ComputerScore++;
+          console.log("You lose");
+        }
+        return;
+      }
+
       let UserScore = 0;
       let ComputerScore = 0;
+      
       for (let i = 0; i < 5; i++) {
-        
+        const UserChoice = GetUserChoice();
+        const ComputerChoice = GetComputerChoice();
+        PlayRound(UserChoice, ComputerChoice);
       }
     }
 
     // main
-    const UserChoice = GetUserChoice();
-    const ComputerChoice = GetComputerChoice();
-    console.log(UserChoice + "\n" + ComputerChoice);
-    PlayRound(UserChoice, ComputerChoice);
-    console.log(UserScore + " " + ComputerScore)
+    PlayGame()
 
   </script>
 
