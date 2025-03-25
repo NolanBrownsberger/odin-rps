@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Rock Paper Scissors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <script>
+    let UserScore = 0;
+    let ComputerScore = 0;
+    let ResultText = "Welcome to Rock Paper Scissors! Good Luck!";
+
     function GetComputerChoice() {
       let ComputerChoice = undefined;
       let random = Math.random();
@@ -19,43 +24,177 @@
       }
     }
 
-    function GetUserChoice() {
-      let GetChoice = true;
-      while (GetChoice) {
-        let UserChoice = prompt("Type in one of these options: rock paper scissors");
-        if (UserChoice == "rock" || UserChoice == "paper" || UserChoice == "scissors") {
-          return UserChoice;
-        }
+    function PlayRound(UserChoice, ComputerChoice) {
+      if (UserChoice == ComputerChoice) {
+        resultContents.textContent = `You both picked ${ComputerChoice}. It's a tie.`;
+      } else if (UserChoice == "rock" && ComputerChoice == "scissors" || UserChoice == "paper" && ComputerChoice == "rock" || UserChoice == "scissors" && ComputerChoice == "paper") {
+        UserScore++;
+        userScore.textContent = `${UserScore}`;
+        resultContents.textContent = `${UserChoice} beats ${ComputerChoice}. You win!`;
+      } else {
+        ComputerScore++;
+        computerScore.textContent = `${ComputerScore}`;
+        resultContents.textContent = `Oof, ${UserChoice} loses to ${ComputerChoice}. You lose.`;
       }
+
+      if (UserScore == 5 || ComputerScore == 5) {
+        resultContents.textContent = `${UserScore == 5 ? "Congrats bud" : "oof, refresh to try again"}`;
+        btnList.forEach(btn => btn.disabled = true);
+      }
+
+      return;
     }
 
-    function PlayGame() {
+    // creates, very inefficiently, the html layout exclusively with JavaScript!
+    document.body.style.backgroundColor = "rgb(210, 210, 210)";
+    document.body.style.fontFamily = "Caveat, sans-serif";
 
-      function PlayRound(UserChoice, ComputerChoice) {
-        if (UserChoice == ComputerChoice) {
-          console.log("Tie");
-        } else if (UserChoice == "rock" && ComputerChoice == "scissors" || UserChoice == "paper" && ComputerChoice == "rock" || UserChoice == "scissors" && ComputerChoice == "paper") {
-          UserScore++;
-          console.log("You win");
-        } else {
-          ComputerScore++;
-          console.log("You lose");
-        }
-        return;
-      }
+    const container = document.createElement("div");
+    const title = document.createElement("h1");
+    const span = document.createElement("span");
+    span.style.marginBottom = "8px";
 
-      let UserScore = 0;
-      let ComputerScore = 0;
-      
-      for (let i = 0; i < 5; i++) {
-        const UserChoice = GetUserChoice();
-        const ComputerChoice = GetComputerChoice();
-        PlayRound(UserChoice, ComputerChoice);
-      }
-    }
+    const rock = document.createElement("button");
+    const paper = document.createElement("button");
+    const scissors = document.createElement("button");
 
-    // main
-    PlayGame()
+    document.body.appendChild(container);
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.alignItems = "center";
+
+    title.textContent = "Choose Your Weapon!";
+    title.style.padding = "8px 24px";
+    title.style.fontSize = "56px"
+    title.style.textAlign = "center"
+    title.style.color = "rgb(50, 50, 50, 1.0)";
+    title.style.fontWeight = "1000";
+    title.style.marginBottom = "24px";
+
+    container.appendChild(title);
+
+    rock.style.backgroundImage = "url('./images/rock.png')";
+    paper.style.backgroundImage = "url('./images/paper.png')";
+    scissors.style.backgroundImage = "url('./images/scissors.png')";
+
+    span.appendChild(rock);
+    span.appendChild(paper);
+    span.appendChild(scissors);
+
+    container.appendChild(span);
+    span.style.display = "flex";
+    span.style.justifyContent = "center";
+    span.style.gap = "20px";
+
+    const btnList = document.querySelectorAll("button");
+
+    btnList.forEach(btn => {
+      btn.style.backgroundPosition = "center";
+      btn.style.backgroundSize = "cover";
+      btn.style.backgroundColor = "rgb(240, 240, 240, 1.0)";
+      btn.style.height = "175px";
+      btn.style.width = "200px";
+      btn.style.borderRadius = "16px";
+      btn.style.border = "none";
+      btn.style.marginBotttom = "8px";
+      btn.style.boxShadow = "0px 0px 7px 1px rgb(150 150 150)"
+      btn.addEventListener("mouseenter", () => {
+        btn.style.backgroundColor = "rgb(200, 200, 200, 0.15)";
+        btn.addEventListener("mousedown", () => {
+        })
+      })
+      btn.addEventListener("mouseleave", () => {
+        btn.style.backgroundColor = "rgb(240, 240, 240, 1.0)";
+      })
+    })
+
+    rock.addEventListener("click", () => PlayRound("rock", GetComputerChoice()));
+    paper.addEventListener("click", () => PlayRound("paper", GetComputerChoice()));
+    scissors.addEventListener("click", () => PlayRound("scissors", GetComputerChoice()));
+
+    let scoreContainer = document.createElement("div");
+    scoreContainer.style.display = "flex";
+    scoreContainer.style.display = "620px";
+    scoreContainer.style.alignItems = "center";
+    scoreContainer.style.gap = "48px";
+    scoreContainer.style.marginTop = "8px";
+    scoreContainer.style.height = "100px";
+
+    let scoreTitle = document.createElement("h3");
+    scoreTitle.textContent = "Score:";
+    scoreTitle.style.fontSize = "56px";
+    scoreTitle.style.paddingTop = "35px";
+    scoreTitle.style.margin = 0;
+
+    scoreContainer.appendChild(scoreTitle);
+
+    let userScoreContainer = document.createElement("span");
+    let computerScoreContainer = document.createElement("span");
+
+    let userScoreTitle = document.createElement("h4");
+    let computerScoreTitle = document.createElement("h4");
+    let userScore = document.createElement("p");
+    let computerScore = document.createElement("p");
+
+    userScoreTitle.textContent = "Your Score:";
+    userScoreTitle.style.marginBottom = "0";
+    userScoreTitle.style.fontSize = "38px";
+
+    computerScoreTitle.textContent = "Computer Score:";
+    computerScoreTitle.style.marginBottom = "0";
+    computerScoreTitle.style.fontSize = "36px"
+
+    userScore.textContent = `${UserScore}`;
+    userScore.style.fontSize = "56px";
+    userScore.style.margin = "0px";
+    userScore.style.textAlign = "center";
+
+    computerScore.textContent = `${ComputerScore}`;
+    computerScore.style.fontSize = "56px";
+    computerScore.style.margin = "0px";
+    computerScore.style.textAlign = "center";
+
+    
+    userScoreContainer.appendChild(userScoreTitle);
+    userScoreContainer.appendChild(userScore);
+
+    computerScoreContainer.appendChild(computerScoreTitle);
+    computerScoreContainer.appendChild(computerScore);
+
+    scoreContainer.appendChild(userScoreContainer);
+    scoreContainer.appendChild(computerScoreContainer);
+
+    container.appendChild(scoreContainer);
+
+    let resultContainer = document.createElement("div");
+    let resultTitle = document.createElement("h3");
+    let resultContents = document.createElement("p");
+
+    resultContainer.style.backgroundColor = "rgb(50 50 50)";
+    resultContainer.style.padding = "16px 56px";
+    resultContainer.style.color = "rgb(220 220 220)"
+    resultContainer.style.paddingTop = "8px";
+    resultContainer.style.borderRadius = "16px";
+    resultContainer.style.marginTop = "56px";
+    resultContainer.style.boxShadow = "0px 0px 7px 1px rgb(150 150 150)"
+
+    resultTitle.textContent = "Results:";
+    resultTitle.style.textAlign = "center";
+    resultTitle.style.margin = "0";
+    resultContainer.appendChild(resultTitle);
+
+    resultContents.textContent = `${ResultText}`;
+    resultContents.style.margin = "0";
+    resultContents.style.width = "600px";
+    resultContents.style.textAlign = "center";
+
+    resultTitle.style.fontSize = "48px";
+    resultContents.style.fontSize = "36px";
+    resultContents.style.textWrap = "wrap";
+    resultContainer.appendChild(resultContents)
+
+    container.appendChild(resultContainer);
+    // All Done creating layout
 
   </script>
 
